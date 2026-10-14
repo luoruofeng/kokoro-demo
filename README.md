@@ -37,7 +37,7 @@
 ### 2.1 一键运行（推荐）
 
 ```powershell
-git clone <你的仓库地址> kokoro-demo
+git clone git@github.com:luoruofeng/kokoro-demo.git kokoro-demo
 cd kokoro-demo
 .\run.ps1
 ```

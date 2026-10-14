@@ -1,0 +1,4 @@
+# 该目录用于存放 Kokoro-82M 权重与音色（约 330 MB），不提交到 GitHub。
+# 首次运行 run.ps1 / server.py / cli.py 时会自动下载到这里：
+#   models/Kokoro-82M/{config.json, kokoro-v1_0.pth, voices/*.pt}
+# 也可以手动执行：python scripts/download_model.py

@@ -1,0 +1,57 @@
+# Kokoro-82M 多语言 TTS Demo 依赖
+# 本机验证环境：Windows / Python 3.13 / CPU 推理
+#
+# 推荐安装步骤（顺序很重要，见 README「安装」一节）：
+#   1) python -m venv .venv
+#   2) .venv\Scripts\python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+#   3) .venv\Scripts\python -m pip install -r requirements.txt
+#   4) .venv\Scripts\python -m spacy download en_core_web_sm
+#   5) .venv\Scripts\python scripts/download_model.py
+
+# ---- 推理核心 ----
+# torch 需要 CPU 版时请用上面的 --index-url 单独安装
+torch>=2.4
+numpy>=2.0
+soundfile>=0.12
+scipy>=1.11
+
+# transformers 4.x 要求 huggingface_hub<1.0，务必锁住，否则 import 直接报错
+transformers>=4.40,<5
+huggingface_hub>=0.34,<1.0
+
+# ---- G2P（文本 -> 音素）----
+# 英文：spacy + en_core_web_sm（用 spacy download 安装）
+spacy>=3.7,<4
+# 通用：espeak-ng（espeakng-loader 自带 Windows/Linux/macOS 动态库）
+phonemizer>=3.2
+espeakng-loader>=0.2
+# 中文
+jieba
+ordered-set
+pypinyin
+cn2an
+pypinyin-dict
+# 日语
+fugashi
+unidic-lite
+jaconv
+mojimoji
+pyopenjtalk
+# 数字/货币等文本归一化
+num2words
+regex
+addict
+loguru
+
+# ---- 推理引擎本体（PyPI 上的 kokoro 版本较旧，直接从 GitHub 装最新版）----
+kokoro @ git+https://github.com/hexgrad/kokoro.git
+misaki @ git+https://github.com/hexgrad/misaki.git
+
+# ---- Web 服务与前端 ----
+fastapi
+uvicorn
+pydantic>=2
+requests
+
+# 可选：misaki 的 transformer 式英文标注器（默认不使用，装了会拖入 spacy 4 dev 依赖）
+# spacy-curated-transformers<2

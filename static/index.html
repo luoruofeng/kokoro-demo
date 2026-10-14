@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kokoro-82M · 多语言语音合成 Demo</title>
+<link rel="icon" href="/static/favicon.svg" />
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<div class="bg-orbs" aria-hidden="true"><span></span><span></span><span></span></div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="logo">K</div>
+    <div>
+      <h1>Kokoro-82M<span>多语言语音合成</span></h1>
+      <p>82M 参数 · 9 种语言 · 54 个音色 · 纯本地 CPU 推理</p>
+    </div>
+  </div>
+  <div class="engine-chips">
+    <span class="chip" id="chip-device">设备 ·</span>
+    <span class="chip" id="chip-model">模型 ·</span>
+    <span class="chip" id="chip-voices">音色 ·</span>
+    <span class="chip chip-state" id="chip-state"><i></i><span id="chip-state-text">加载中</span></span>
+  </div>
+</header>
+
+<main class="layout">
+  <aside class="panel panel-langs">
+    <h2 class="panel-title">语言 <span id="lang-count"></span></h2>
+    <ul class="lang-list" id="lang-list"></ul>
+  </aside>
+
+  <section class="panel panel-studio">
+    <div class="studio-head">
+      <div>
+        <h2 id="lang-title">正在加载 …</h2>
+        <p class="muted" id="lang-tip"></p>
+      </div>
+      <span class="tag" id="lang-g2p">—</span>
+    </div>
+
+    <div class="field">
+      <label>音色 <span class="muted" id="voice-hint"></span></label>
+      <div class="voice-grid" id="voice-grid"></div>
+    </div>
+
+    <div class="field">
+      <label>语速 <b id="speed-value">1.00×</b></label>
+      <input type="range" id="speed" min="0.6" max="1.6" step="0.05" value="1" />
+      <div class="range-ticks"><span>0.6× 慢</span><span>1.0×</span><span>1.6× 快</span></div>
+    </div>
+
+    <div class="field">
+      <label>文本 <span class="muted">空行可分段，长文本会自动切块</span></label>
+      <textarea id="text" rows="5" spellcheck="false" placeholder="输入要朗读的文字 …"></textarea>
+      <div class="chips" id="sample-chips"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn primary" id="btn-generate">生成并播放</button>
+      <button class="btn" id="btn-generate-only">仅生成</button>
+      <button class="btn ghost" id="btn-clear">清空</button>
+    </div>
+
+    <div class="player" id="player" hidden>
+      <div class="player-top">
+        <button class="play-btn" id="play-btn" title="播放 / 暂停">▶</button>
+        <div class="player-info">
+          <div class="player-title" id="player-title">—</div>
+          <div class="player-meta" id="player-meta"></div>
+        </div>
+        <div class="player-time"><span id="time-now">0:00</span> / <span id="time-total">0:00</span></div>
+      </div>
+      <canvas id="wave"></canvas>
+      <canvas id="spectrum"></canvas>
+      <details class="phonemes">
+        <summary>查看音素序列（模型实际输入，IPA）</summary>
+        <code id="phoneme-text"></code>
+      </details>
+    </div>
+  </section>
+
+  <aside class="panel panel-side">
+    <h2 class="panel-title">一键对比全部语言</h2>
+    <p class="muted small">每种语言用各自的示例文案合成，可依次播放做横向对比。</p>
+    <div class="actions compact">
+      <button class="btn small" id="btn-compare">生成 9 种语言</button>
+      <button class="btn ghost small" id="btn-play-all" disabled>依次播放</button>
+    </div>
+    <div class="compare-list" id="compare-list">
+      <div class="empty">还没有对比结果</div>
+    </div>
+
+    <h2 class="panel-title">历史记录 <span id="history-count"></span></h2>
+    <div class="actions compact">
+      <button class="btn ghost small" id="btn-history-refresh">刷新</button>
+      <button class="btn ghost small" id="btn-history-clear">清空</button>
+    </div>
+    <div class="history-list" id="history-list">
+      <div class="empty">暂无记录</div>
+    </div>
+  </aside>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="overlay-card">
+    <div class="spinner" id="overlay-spinner"></div>
+    <h3 id="overlay-title">正在加载 Kokoro-82M</h3>
+    <p id="overlay-text">准备中 …</p>
+    <div class="overlay-bar" id="overlay-bar" hidden><i id="overlay-bar-fill"></i></div>
+    <p class="overlay-sub" id="overlay-sub"></p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

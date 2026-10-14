@@ -1,0 +1,63 @@
+# ==================================================================
+# 模型权重与大文件（约 330 MB，请用 scripts/download_model.py 获取）
+# 首次运行时会自动下载，不要提交到 GitHub。
+# ==================================================================
+# 注意：用 models/* 而不是 models/，否则无法用 ! 例外把 .gitkeep 加回来
+models/*
+!models/.gitkeep
+
+# 兜底的权重 / 二进制文件规则：任何目录下的这些后缀都不入库
+*.pth
+*.pt
+*.pth.tar
+*.onnx
+*.safetensors
+*.ckpt
+*.bin
+*.h5
+*.tflite
+*.gguf
+*.msgpack
+*.npy
+*.npz
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+
+# 下载中途的临时文件与缓存
+*.part
+*.partial
+*.tmp
+*.download
+.download/
+.cache/
+hf_cache/
+.modelscope/
+
+# ==================================================================
+# 运行时产物
+# ==================================================================
+outputs/
+.venv/
+venv/
+node_modules/
+package-lock.json
+.deps-src/
+
+# ==================================================================
+# 日志与编辑器 / Python 缓存
+# ==================================================================
+*.log
+*.err
+.voices.md
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.idea/
+.vscode/
